@@ -1,43 +1,41 @@
 package com.todo.dao;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TodoItem {
-	private String category;
     private String title;
     private String desc;
     private String current_date;
-    private String current_time;
+    private String category;
     private String due_date;
+    private int number;
 
 
-    public TodoItem(String category, String title, String desc, String due_date){
-    	this.category = category;
+	public TodoItem(String title, String desc, String category, String due_date){
         this.title=title;
         this.desc=desc;
-        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
+        this.category=category;
+        this.due_date=due_date;
+        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
         this.current_date = f.format(new Date());
-        SimpleDateFormat t = new SimpleDateFormat("kk:mm:ss");
-        this.current_time = t.format(new Date());
-        this.due_date = due_date;
     }
-    
+
+    public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+
     public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	public String getDue_date() {
-		return due_date;
-	}
-
-	public void setDue_date(String due_date) {
-		this.due_date = due_date;
 	}
 
 	public String getTitle() {
@@ -64,23 +62,24 @@ public class TodoItem {
         this.current_date = current_date;
     }
 
-	@Override
-	public String toString() {
-		return "["+title+"]" + desc + "-"+ current_date;
+    public String getDue_date() {
+		return due_date;
 	}
-	
-	
+
+	public void setDue_date(String due_date) {
+		this.due_date = due_date;
+	}
+
 	public String toSaveString() {
-		return category+ "##" +title+ "##" + desc+ "##" + current_date + "##" + due_date+ "##" + current_time
-				+ "\n";
-	}
+    	return category + "##" + title + "##" + desc + "##" + due_date + "##" + current_date + "\n";
+    }
 
-	public String getCurrent_time() {
-		return current_time;
-	}
+    @Override
+    public String toString() {
+    	return "[" + category + "]" + " " + title + " - " + desc + " - " + due_date + " - " + current_date;
+    }
 
-	public void setCurrent_time(String current_time) {
-		this.current_time = current_time;
-	}
-	
+    public String findString() {
+    	return category + title + desc + due_date + current_date;
+    }
 }

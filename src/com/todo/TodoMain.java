@@ -2,99 +2,97 @@ package com.todo;
 
 import java.util.Scanner;
 
+import com.todo.dao.TodoItem;
 import com.todo.dao.TodoList;
 import com.todo.menu.Menu;
 import com.todo.service.TodoUtil;
 
 public class TodoMain {
-	
+
 	public static void start() {
-	
 		Scanner sc = new Scanner(System.in);
 		TodoList l = new TodoList();
-		boolean isList = false; //flag 변수로 사용됨
+
+		boolean isList = false;
 		boolean quit = false;
-		TodoUtil.loadList(l, "todolist.txt");
 		Menu.displaymenu();
 		do {
 			Menu.prompt();
 			isList = false;
 			String choice = sc.next();
-			
 			switch (choice) {
 
-			case "add":
+			case "1":
 				TodoUtil.createItem(l);
 				break;
-			
-			case "del":
+
+			case "2":
 				TodoUtil.deleteItem(l);
+				TodoUtil.saveList(l, "todolist.txt");
 				break;
-				
-			case "edit":
+
+			case "3":
 				TodoUtil.updateItem(l);
 				break;
-				
-			case "ls":
+
+			case "4":
 				TodoUtil.listAll(l);
 				break;
 				
-			case "ls_cate":
-				TodoUtil.listCate(l);
+			case "5":
+				TodoUtil.listCateAll(l);
 				break;
-
-			case "ls_name_asc":
-				l.sortByName();
+				
+			case "6":
 				System.out.println("제목순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l, "title", 1);
 				break;
 
-			case "ls_name_desc":
-				l.sortByName();
+			case "7":
 				System.out.println("제목역순으로 정렬하였습니다.");
-				l.reverseList();
-				isList = true;
+				TodoUtil.listAll(l, "title", 0);
 				break;
-				
-			case "ls_date":
-				l.sortByDate();
+
+			case "8":
 				System.out.println("날짜순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l, "due_date", 1);
 				break;
+
+			
 				
-			case "ls_date_desc":
-				l.sortByDate();
+			case "9":
 				System.out.println("날짜역순으로 정렬하였습니다.");
-				l.reverseList();
-				isList = true;
+				TodoUtil.listAll(l, "due_date", 0);
 				break;
 				
-			case "find":
-				String keyword = sc.next();
+			case "10":
+				String keyword = sc.nextLine().trim();
 				TodoUtil.findList(l, keyword);
 				break;
-				
-				
-			case "find_cate":
-				String category = sc.next();
-				TodoUtil.findCateList(l, category);
+
+			
+			case "11":
+				String cate = sc.next();
+				TodoUtil.findCategory(l, cate);
 				break;
-				
+
+			case "12":
+				TodoUtil.saveList(l, "todolist.txt");
+				System.out.println("Successfully saved in file.");
+				quit = true;
+				break;
+
 			case "help":
 				Menu.displaymenu();
 				break;
 				
-			case "exit":
-				quit = true;
-				break;
 				
 			default:
-				System.out.println("정확한 입력어를 다시 입력하십시오. 도움말을 원하신다면 'help'를 입력하세요.");
+				System.out.println("Please enter command from above. (도움말 - help)");
 				break;
 			}
-			
+
 			if(isList) TodoUtil.listAll(l);
 		} while (!quit);
-		TodoUtil.saveList(l,"todolist.txt");
 	}
 }

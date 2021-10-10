@@ -15,7 +15,7 @@ public class Menu {
         System.out.println("8. ls_date : 날짜순 정렬");
         System.out.println("9. ls_date_desc : 날짜순 정렬");
         System.out.println("10. find <keyword> : 키워드 검색");
-        System.out.println("11. find <category> : 카테고 검색");
+        System.out.println("11. find <category> : 카테고리 검색");
         System.out.println("12. exit : 종료");
     }
     
