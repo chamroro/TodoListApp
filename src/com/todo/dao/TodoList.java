@@ -126,7 +126,7 @@ public class TodoList {
          pstmt.setString(3, t.getCategory());
          pstmt.setString(4, t.getCurrent_date());
          pstmt.setString(5, t.getDue_date());
-         pstmt.setInt(6, t.getNumber());
+         pstmt.setInt(6, t.getId());
          count = pstmt.executeUpdate();
          pstmt.close();
       } catch (SQLException e) {
@@ -169,6 +169,7 @@ public class TodoList {
             String current_date = rs.getString("current_date");
             TodoItem t = new TodoItem(title, description, category, due_date);
             t.setNumber(id);
+            t.setCurrent_date(current_date);
             list.add(t);
          }
          pstmt.close();
@@ -212,6 +213,7 @@ public class TodoList {
 	            String current_date = rs.getString("current_date");
 	            TodoItem t = new TodoItem(title, description, category, due_date);
 	            t.setNumber(id);
+	            t.setCurrent_date(current_date);
 	            list.add(t);
 	         }
 	         pstmt.close();
@@ -239,6 +241,7 @@ public class TodoList {
 	            String current_date = rs.getString("current_date");
 	            TodoItem t = new TodoItem(title, description, category, due_date);
 	            t.setNumber(id);
+	            t.setCurrent_date(current_date);
 	            list.add(t);
 		   }
 	   } catch (SQLException e) {

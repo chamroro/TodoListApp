@@ -105,17 +105,17 @@ public class TodoUtil {
 		int index = sc.nextInt();
 
 		System.out.print("새 제목 > ");
-		new_title = sc.nextLine();
+		new_title = sc.next().trim();
 
 		System.out.print("새 카테고리 > ");
-		new_category = sc.nextLine();
+		new_category = sc.next().trim();
 		sc.nextLine();
 
 		System.out.print("새 내용 > ");
-		new_desc = sc.nextLine();
+		new_desc = sc.nextLine().trim();
 
 		System.out.print("새 마감일자  > ");
-		new_due_date = sc.nextLine();
+		new_due_date = sc.nextLine().trim();
 
 		TodoItem t = new TodoItem(new_title, new_desc, new_category, new_due_date);
 		t.setNumber(index);

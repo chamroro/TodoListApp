@@ -58,19 +58,16 @@ public class TodoMain {
 				TodoUtil.listAll(l, "due_date", 1);
 				break;
 
-			
-				
 			case "9":
 				System.out.println("날짜역순으로 정렬하였습니다.");
 				TodoUtil.listAll(l, "due_date", 0);
 				break;
 				
 			case "10":
-				String keyword = sc.nextLine().trim();
+				String keyword = sc.next();
 				TodoUtil.findList(l, keyword);
 				break;
 
-			
 			case "11":
 				String cate = sc.next();
 				TodoUtil.findCategory(l, cate);
@@ -78,7 +75,7 @@ public class TodoMain {
 
 			case "12":
 				TodoUtil.saveList(l, "todolist.txt");
-				System.out.println("Successfully saved in file.");
+				System.out.println("파일이 저장되었습니다.");
 				quit = true;
 				break;
 
@@ -86,9 +83,8 @@ public class TodoMain {
 				Menu.displaymenu();
 				break;
 				
-				
 			default:
-				System.out.println("Please enter command from above. (도움말 - help)");
+				System.out.println("정확한 입력어를 다시 입력하십시오. 도움말을 원하신다면 'help'를 입력하세요.");
 				break;
 			}
 
