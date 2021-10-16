@@ -73,11 +73,29 @@ public class TodoMain {
 				TodoUtil.findCategory(l, cate);
 				break;
 
+			
+				
 			case "12":
+				System.out.println("중요도 정렬하였습니다.");
+				TodoUtil.listAll(l, "importance", 0);
+				break;
+				
+			case "13":
+				System.out.println("중요도 역순으로 정렬하였습니다.");
+				TodoUtil.listAll(l, "importance", 1);
+				break;
+				
+			case "14":
 				TodoUtil.saveList(l, "todolist.txt");
 				System.out.println("파일이 저장되었습니다.");
 				quit = true;
 				break;
+				
+			case "comp":
+				String comNum =sc.nextLine();
+				TodoUtil.completeItem(l, comNum);
+				break;
+			
 
 			case "help":
 				Menu.displaymenu();

@@ -24,13 +24,12 @@ public class TodoUtil {
 				String desc = st.nextToken();
 				String due_date = st.nextToken();
 				String current_date = st.nextToken();
+				int is_completed = Integer.parseInt(st.nextToken());
+				int importance = Integer.parseInt(st.nextToken());
+				String place = st.nextToken();
 
-				TodoItem t = new TodoItem(title, desc, category, due_date);
+				TodoItem t = new TodoItem(title, desc, category, due_date, is_completed, importance, place);
 				t.setCurrent_date(current_date);
-//				if (l.isDuplicate(title)) {
-//					return;
-//				}
-//				else 
 				l.addItem(t);
 			}
 			in.close();
@@ -55,8 +54,8 @@ public class TodoUtil {
 		}
 	}
 	public static void createItem(TodoList l) {
-
-		String title, desc, category, due_date;
+		int is_completed, importance;
+		String title, desc, category, due_date, place ;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("[항목 추가]\n"
@@ -77,8 +76,17 @@ public class TodoUtil {
 
 		System.out.print("마감일자 > ");
 		due_date = sc.nextLine().trim();
+		
+		System.out.print("중요도(1-5) > ");
+		importance = sc.nextInt();
+		
+		System.out.print("장소 > ");
+		place = sc.next();
+			
+		
+		is_completed=0;
 
-		TodoItem t = new TodoItem(title, desc, category, due_date);
+		TodoItem t = new TodoItem(title, desc, category, due_date, is_completed, importance, place );
 		if(l.addItem(t) > 0)
 			System.out.println("추가되었습니다.");
 	}
@@ -86,41 +94,60 @@ public class TodoUtil {
 	public static void deleteItem(TodoList l) {
 		Scanner sc = new Scanner(System.in);
 
+		
 		System.out.print("[항목 삭제]\n"
 				+ "삭제할 항목의 번호를 입력하시오 > ");
-		int index = sc.nextInt();
-
-		if(l.deleteItem(index) > 0)
-			System.out.println("삭제되었습니다.");
+		String index = sc.nextLine();
+		
+		String isdeleted="";
+		StringTokenizer st = new StringTokenizer(index);
+		while(st.hasMoreTokens()) {
+			int n = Integer.parseInt(st.nextToken());
+			if(l.deleteItem(n)>0) {
+				isdeleted += n+"/";
+				
+			}
+		}
+		System.out.printf("%s를 삭제하였습니다.", isdeleted);
 	}
 
 
 	public static void updateItem(TodoList l) {
-		String new_title, new_desc, new_category, new_due_date;
+		int new_is_completed, new_importance;
+		String new_title, new_desc, new_category, new_due_date, new_place;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("[항목 수정]\n"
 				+ "수정할 항목의 번호를 입력하시오 > ");
 
 		int index = sc.nextInt();
+		
+		System.out.print("제목 > ");
+		new_title = sc.next();
 
-		System.out.print("새 제목 > ");
-		new_title = sc.next().trim();
+		System.out.print("카테고리 > ");
+		new_category = sc.next();
 
-		System.out.print("새 카테고리 > ");
-		new_category = sc.next().trim();
-		sc.nextLine();
+		System.out.print("내용 > ");
+		new_desc = sc.next();
 
-		System.out.print("새 내용 > ");
-		new_desc = sc.nextLine().trim();
+		System.out.print("마감일자 > ");
+		new_due_date = sc.next();
+		
+		System.out.print("중요도(1-5) > ");
+		new_importance = sc.nextInt();
+		
+		System.out.print("장소 > ");
+		new_place = sc.next();
+			
+		new_is_completed=0;
 
-		System.out.print("새 마감일자  > ");
-		new_due_date = sc.nextLine().trim();
-
-		TodoItem t = new TodoItem(new_title, new_desc, new_category, new_due_date);
-		t.setNumber(index);
+		TodoItem t = new TodoItem(new_title, new_desc, new_category, new_due_date, new_is_completed, new_importance, new_place);
+		t.setId(index);
 		if(l.updateItem(t)>0)
 			System.out.println("수정되었습니다.");
+		
+	
 	}
 
 	public static void findList(TodoList l, String keyword) {		
@@ -138,7 +165,7 @@ public class TodoUtil {
 		for(TodoItem item : l.getList() ) {
 			i++;
 			if(item.getCategory().equals(category)) {
-				System.out.println((i+1) + ". " + item.toString());
+				System.out.println(item.toString());
 				count++;
 			}
 		}
@@ -192,5 +219,18 @@ public class TodoUtil {
 		for (TodoItem item : l.getOrderedList(orderby, ordering)) {
 			System.out.println(item.toString());
 		}
+	}
+	
+	public static void completeItem(TodoList l, String comNum) {
+		String ischecked="";
+		StringTokenizer st = new StringTokenizer(comNum);
+		while(st.hasMoreTokens()) {
+			int n = Integer.parseInt(st.nextToken());
+			if(l.completeItem(n)==1) {
+				ischecked += n+"/";
+				
+			}
+		}
+		System.out.printf("%s를 완료 체크하였습니다.", ischecked);
 	}
 }

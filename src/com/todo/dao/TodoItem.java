@@ -10,20 +10,29 @@ public class TodoItem {
     private String current_date;
     private String category;
     private String due_date;
+    private int is_completed;
+    private int importance;
+    private String place;
+    
     
 
-	public TodoItem(String title, String desc, String category, String due_date){
+	public TodoItem(String title, String desc, String category, String due_date, int is_completed, int importance, String place){
         this.title=title;
         this.desc=desc;
         this.category=category;
         this.due_date=due_date;
+        this.is_completed=is_completed;
+        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
+        this.current_date = f.format(new Date());
+        this.importance = importance;
+        this.place = place;
     }
 
     public int getId() {
 		return id;
 	}
 
-	public void setNumber(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -69,15 +78,48 @@ public class TodoItem {
 	}
 
 	public String toSaveString() {
-    	return category + "##" + title + "##" + desc + "##" + due_date + "##" + current_date + "\n";
+    	return category + "##" + title + "##" + desc + "##" + due_date + "##" + current_date +  "##" + place +  "##" + importance +"\n";
     }
 
     @Override
     public String toString() {
-    	return id + ") [" + category + "]" + " " + title + " - " + desc + " - " + due_date + " - " + current_date;
+    	String check;
+    	if(is_completed==1) check= "[V]";
+    	else check="";
+    	
+    	String star="⭐️", stars="";
+    	for(int i=0;i<importance;i++) {
+    		stars+=star;
+    	}
+    	
+    	return id + ") [" + category + "]" + " " + title + check +" - " + desc + " - " + due_date + " - " + current_date+ " - " + place + " " +stars;
     }
 
     public String findString() {
-    	return category + title + desc + due_date + current_date;
+    	return category + title + is_completed + desc + due_date + current_date;
     }
+
+	public int getIs_completed() {
+		return is_completed;
+	}
+
+	public void setIs_completed(int is_completed) {
+		this.is_completed = is_completed;
+	}
+
+	public int getImportance() {
+		return importance;
+	}
+
+	public void setImportance(int importance) {
+		this.importance = importance;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
 }
